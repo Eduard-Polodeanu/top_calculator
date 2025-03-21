@@ -1,0 +1,57 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.main-title {
+    margin: 30px;
+}
+
+.calc-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 318px;
+    row-gap: 6px;
+}
+
+.results-bar {
+    min-width: 306px;
+    height: 50px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.btns-container {
+    flex-wrap: wrap;
+    display: flex;
+    gap: 6px;
+    min-width: 318px;
+}
+
+button {
+    width: 75px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.operator {
+    background-color: rgb(229, 229, 229);
+}
+
+.big-text {
+    font-size: 32px;
+}
+
+.upper-case {
+    text-transform: uppercase;
+}
+
+#results-text {
+    padding-right: 10px;
+}
