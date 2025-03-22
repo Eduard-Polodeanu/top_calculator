@@ -35,23 +35,21 @@ function operate(operator, operand1, operand2) {
 }
 
 let currentInput = "";
-const operands = document.querySelectorAll('.operand');
-operands.forEach((operand) => {
-    operand.addEventListener('click', () => {
-        const input = document.querySelector('#results-text');
-        const clickedOperand = operand.textContent;
-        currentInput += clickedOperand;
-        input.textContent = currentInput;
-    });
-});
-
-const operators = document.querySelectorAll('.operator');
-operators.forEach((operator) => {
-    operator.addEventListener('click', () => {
-        const input = document.querySelector('#results-text');
-        const clickedOperator = operator.textContent;
-        currentInput += clickedOperator;
-        input.textContent = currentInput;
-    });
+const resultsBar = document.querySelector('#results-text');
+const btnsContainer = document.querySelector('.btns-container');
+btnsContainer.addEventListener('click', (event) => {
+    let target = event.target;
+    switch(target.className) {
+        case 'operand':
+            const clickedOperand = target.textContent;
+            currentInput += clickedOperand;
+            resultsBar.textContent = currentInput;
+            break;
+        case 'operator':
+            const clickedOperator = target.textContent;
+            currentInput += clickedOperator;
+            resultsBar.textContent = currentInput;
+            break;
+    }
 });
 
