@@ -31,12 +31,13 @@ function operate(operator, operand1, operand2) {
             result = divide(operand1, operand2);
             break;
         default:
-            console.alert("Operator not defined");
+            alert("Operation not defined");
             break;
     }
     return result;
 }
 
+let isCurrentlyFrac = false;
 let currentInput = "";
 const resultsBar = document.querySelector('#results-text');
 const btnsContainer = document.querySelector('.btns-container');
@@ -44,23 +45,44 @@ btnsContainer.addEventListener('click', (event) => {
     let target = event.target;
     switch(target.className) {
         case 'operand':
+            if (isNewOperation) {
+                currentInput = '';
+                isNewOperation = false;
+            }
             const clickedOperand = target.textContent;
             currentInput += clickedOperand;
             resultsBar.textContent = currentInput;
             break;
         case 'operator':
+        case 'operator equal':
             const clickedOperator = target.textContent;
             currentInput += clickedOperator;
             evaluateInput();
             resultsBar.textContent = currentInput;
+            isCurrentlyFrac = false;
             break;
-        case 'clear':
+        case 'clear-all':
             currentInput = '';
             resultsBar.textContent = currentInput;
+            isCurrentlyFrac = false;
+            break;
+        case 'clear':
+            currentInput = currentInput.slice(0, -1);
+            resultsBar.textContent = currentInput;
+            break;
+        case 'fractional':
+            if (!isCurrentlyFrac) {
+                currentInput += '.';
+                resultsBar.textContent = currentInput;
+            }
+            isCurrentlyFrac = true;
+            break;
+        case 'plus-minus':
             break;
     }
 });
 
+let isNewOperation = false;
 let operator, operand1, operand2;
 function evaluateInput() {
     const splitted = splitTerms(currentInput);
@@ -70,8 +92,14 @@ function evaluateInput() {
         operator = splitted[1];
         operand2 = Number(splitted[2]);
         let result = operate(operator, operand1, operand2);
-        if (splitted[3] === '=') splitted.splice(0, 4, result);
-        else splitted.splice(0, 3, result);
+        if (splitted[3] === '=') {
+            splitted.splice(0, 4, result);
+            isNewOperation = true;
+        }
+        else {
+            splitted.splice(0, 3, result);
+            isNewOperation = false;
+        }
     }
     currentInput = splitted.join('');
 }
